@@ -1,0 +1,35 @@
+//100 Days of RTL//
+
+//Abilash P//
+
+//D flipflop Master-Slave Condition//
+
+module d_flipflop (CLK, D, Q, Qbar);
+  
+  input  CLK, D;
+  output reg Q, Qbar;
+  
+  always @ (posedge CLK)
+    begin
+        begin
+          Q = D;
+        end
+    end
+  
+  assign  Qbar = ~Q;
+endmodule
+
+module master_slave_flipflop (CLK, D, Q, Qbar);
+  
+  input CLK, D;
+  output Q, Qbar;
+  
+  wire CLK_N;
+  wire x, y;
+  
+  assign CLK_N = ~CLK;
+  
+  d_flipflop master (.D(D), .CLK(CLK_N),   .Q(x), .Qbar(y));
+  d_flipflop slave  (.D(x), .CLK(CLK), .Q(Q), .Qbar(Qbar));
+  
+endmodule
